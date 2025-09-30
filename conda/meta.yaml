@@ -19,12 +19,12 @@ requirements:
     - python
     - libboost
     - libboost-devel
-    - pytest
     - rdkit
 
   host:
     - python
     - numpy >=1.24,<2
+    - pybind11
     - libboost
     - libboost-devel
     - rapidjson

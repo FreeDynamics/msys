@@ -12,6 +12,7 @@ $BUILD_PREFIX/bin/scons install -j $nprocs \
     -D MSYS_WITH_RAPID_JSON=1 \
     -D MSYS_WITH_BLISS=1 \
     -D MSYS_WITH_LPSOLVE=1 \
+    -D MSYS_WITH_INCHI=1 \
     PYTHONVER=$python_version
 
 sitepackage_dir=$(python -c 'import os, sys, site; print(os.path.relpath(site.getsitepackages()[0], sys.exec_prefix))')
