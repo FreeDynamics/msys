@@ -108,6 +108,8 @@ else:
     lpenv.Append(CPPDEFINES=['MSYS_WITHOUT_BLISS'])
 
 if env.get("MSYS_WITH_INCHI"):
+    inchienv = env.Clone()
+    inchienv.Append(CPPDEFINES='MSYS_WITH_INCHI'.split())
     inchi = env.AddObject('inchi.cxx')
     env.Append(LIBS=['inchi'])
 else:
@@ -120,7 +122,8 @@ if env.get("MSYS_WITHOUT_RAPIDJSON"):
     jsenv = env.Clone()
     jsenv.Append(CPPDEFINES='MSYS_WITHOUT_RAPIDJSON'.split())
 else:
-    jsenv = env
+    jsenv = env.Clone()
+    jsenv.Append(CPPDEFINES='MSYS_WITH_RAPIDJSON'.split())
 jsobjs = jsenv.AddObject(['json/import.cxx', 'json/export.cxx'])
 
 zenv = env.Clone()
