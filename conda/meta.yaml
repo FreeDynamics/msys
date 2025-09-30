@@ -1,20 +1,20 @@
-{% set name = "msys" %}
-{% set version = "1.7.359" %}
-
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: "msys"
+  version: "1.7.359"
+
+source:
+  path: ../.
+  use_gitignore: true # note: defaults to true
 
 build:
   number: 1
-  skip: true  # [win]
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
     - scons
-    - numpy >=1.24
+    - numpy >=1.24,<2
     - pybind11
     - python
     - libboost
@@ -24,7 +24,7 @@ requirements:
 
   host:
     - python
-    - numpy >=1.24
+    - numpy >=1.24,<2
     - libboost
     - libboost-devel
     - rapidjson
@@ -36,38 +36,39 @@ requirements:
     - libboost
     - libboost-devel
     - rdkit
-    - {{ pin_compatible('numpy') }}
-    - {{ pin_compatible('libboost') }}
+    - ${{ pin_compatible('numpy') }}
+    - ${{ pin_compatible('libboost') }}
 
-test:
-  imports:
-    - msys
-  commands:
-    - dms-diff -h
-    - dms-dump -h
-    - dms-find-knot -h
-    - dms-fix-mass -h
-    - dms-fix-water-residues -h
-    - dms-frame -h
-    - dms-grease -h
-    - dms-info -h
-    - dms-posre -h
-    - dms-reorder-atoms -h
-    - dms-replicate -h
-    - dms-select -h
-    - dms-sequence -h
-    - dms-set -h
-    - dms-solvate -h
-    - dms-thermalize -h
-    - dms-tile -h
-    - dms-validate -h
-    - dms-version -h
-    - dms2mae -h
-    # Ensure that lpsolve is linked properly
-    - python -c 'import msys; s = msys.FromSmilesString("CC"); msys.AssignBondOrderAndFormalCharge(s)'
+tests:
+  - python: 
+      imports:
+        - msys
+  - script:
+      - dms-diff -h
+      - dms-dump -h
+      - dms-find-knot -h
+      - dms-fix-mass -h
+      - dms-fix-water-residues -h
+      - dms-frame -h
+      - dms-grease -h
+      - dms-info -h
+      - dms-posre -h
+      - dms-reorder-atoms -h
+      - dms-replicate -h
+      - dms-select -h
+      - dms-sequence -h
+      - dms-set -h
+      - dms-solvate -h
+      - dms-thermalize -h
+      - dms-tile -h
+      - dms-validate -h
+      - dms-version -h
+      - dms2mae -h
+      # Ensure that lpsolve is linked properly
+      - python -c 'import msys; s = msys.FromSmilesString("CC"); msys.AssignBondOrderAndFormalCharge(s)'
 
 about:
-  home: https://github.com/DEShawResearch/msys
+  homepage: https://github.com/DEShawResearch/msys
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.txt
@@ -80,4 +81,3 @@ about:
        Command line tools for scripting common tasks;
        C++ and Python interfaces.
     Msys currently supports Python 2.7 and Python 3.6+.
-  dev_url: https://github.com/DEShawResearch/msys

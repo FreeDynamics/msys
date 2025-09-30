@@ -3,7 +3,7 @@ import os
 
 if os.path.isdir('INCHI-1-SRC'):
     ienv = env.Clone()
-    ienv.Replace(CCFLAGS='', CFLAGS='-ansi -O3')
+    ienv.Replace(CCFLAGS='-std=c11', CFLAGS='-ansi -O3')
     ienv.Append(CPPDEFINES=['TARGET_API_LIB', 'COMPILE_ANSI_ONLY'])
     ienv.AddHeaders(Glob('INCHI-1-SRC/INCHI_BASE/src/*.h'), prefix='inchi', stage=True)
     srcs  = Glob('INCHI-1-SRC/INCHI_BASE/src/*.c')
