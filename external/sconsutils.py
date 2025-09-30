@@ -305,7 +305,7 @@ def generate(env):
     opts.Add("OBJDIR", "build product location", 'build')
     opts.Add("PREFIX", "installation location")
 
-    opts.Add(ListVariable('PYTHONVER', 'python versions', os.getenv('PYTHONVER', ''), ['27', '37', '38', '39', '310']))
+    opts.Add(ListVariable('PYTHONVER', 'python versions', os.getenv('PYTHONVER', ''), ['27', '37', '38', '39', '310', '311', '312']))
     opts.Update(env)
 
     builddir = env.Dir(env['OBJDIR']).srcnode().abspath
