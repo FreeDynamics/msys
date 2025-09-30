@@ -399,7 +399,7 @@ public:
     std::string hexdigest() const{
         result_type p = Final();
         char buf[33];
-        sprintf(buf, "%016" PRIx64 "%016" PRIx64, p.first, p.second);
+        sprintf(buf, "%016" "lx" "%016" "lx", p.first, p.second);
         return std::string(buf, 32);
     }
         

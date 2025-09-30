@@ -358,6 +358,7 @@ def generate(env):
             libs=shell([cfg, '--libs'])
         if not os.environ.get("SCONSUTILS_WITHOUT_NUMPY"):
             incs += ' -I' + shell([exe, '-c', 'import numpy; print(numpy.get_include())'])
+        incs += ' -I' + shell([exe, '-c', 'import pybind11; print(pybind11.get_include())'])
         kwds = { 'PYTHON%s_PREFIX' % ver : prefix,
                  'PYTHON%s_CPPFLAGS' % ver : incs,
                  'PYTHON%s_LDFLAGS' % ver : libs,
