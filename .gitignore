@@ -6,3 +6,7 @@ build
 .pytest_cache/
 .vscode/
 tests/.mypy_cache/
+
+output/
+rattler-build-*.log
+upload_packages.sh

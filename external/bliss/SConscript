@@ -1,0 +1,9 @@
+Import('env')
+import os
+
+if os.path.isdir('bliss-0.73'):
+    benv = env.Clone()
+    benv.Replace(CCFLAGS='-g -std=c++03 -Wall --pedantic -O9 -fPIC')
+    benv.AddHeaders(Glob(os.path.join('bliss-0.73', '*.hh')), prefix='bliss', stage=True)
+    srcs  = Glob(os.path.join('bliss-0.73', '*.cc'))
+    benv.AddLibrary('bliss', srcs)

@@ -4,6 +4,7 @@
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/tuple/tuple.hpp>
+#include <boost/foreach.hpp>
 #include <stack>
 
 namespace qi = boost::spirit::qi;
