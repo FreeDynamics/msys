@@ -535,7 +535,8 @@ PYBIND11_MODULE(pfx, m) {
     _import_array();
     if (PyErr_Occurred()) throw error_already_set();
 
-    Py_TYPE(&ptype) = &PyType_Type;
+    // Py_TYPE(&ptype) = &PyType_Type;
+    Py_SET_TYPE(&ptype, &PyType_Type); // Changed in Python 3.11
     ptype.tp_name = "pfx.Pfx";
     ptype.tp_doc = pfx_doc;
     ptype.tp_basicsize = sizeof(PfxObject);
