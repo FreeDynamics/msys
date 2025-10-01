@@ -11,7 +11,7 @@ folder = Path(sys.argv[3])
 def upload(fn):
     data = fn.read_bytes()
     # skip if larger than 100Mb
-    if len(data) > 100 * 1024 * 1024:
+    if len(data) > 500 * 1024 * 1024:
         print("Skipping", fn, "because it is too large")
         return
     name = fn.name
