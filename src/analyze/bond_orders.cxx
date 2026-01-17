@@ -628,7 +628,7 @@ namespace desres { namespace msys {
 
     long BondOrderAssigner::seconds_until_deadline() {
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-        long seconds = std::max(1L, std::chrono::duration_cast<std::chrono::seconds>(_deadline - now).count());
+        long seconds = std::max<long>(1L, std::chrono::duration_cast<std::chrono::seconds>(_deadline - now).count());
         return seconds;
     }
 

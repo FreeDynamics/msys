@@ -142,9 +142,9 @@ class lz4_ostreambuf : public compressed_ostreambuf {
 // as the input stream
 class file_istream : public std::istream {
     public:
-        file_istream(std::istream &stream) {
-            rdbuf(stream.rdbuf());
-        }
+        explicit file_istream(std::istream& stream)
+            : std::istream(stream.rdbuf())
+    {}
 };
 
 #ifdef MSYS_WITH_ZSTD
@@ -509,12 +509,14 @@ lz4_ostreambuf::flush(bool more)
 template <class B, class S>
 class stream_wrapper : public S {
     std::unique_ptr<B> buf;
-    public:
-        stream_wrapper(S &stream, int cl=CL_DEFAULT) : buf(new B(stream.rdbuf(), cl)) {
-            // change associated buffer to our compressed stream buffer
-            this->rdbuf(buf.get());
-        }
-        ~stream_wrapper() = default;
+
+public:
+    explicit stream_wrapper(S& stream, int cl = CL_DEFAULT)
+        : S(stream.rdbuf())
+        , buf(new B(stream.rdbuf(), cl))
+    {}
+
+    ~stream_wrapper() = default;
 };
 
 template <class B> using istream_wrapper = stream_wrapper<B, std::istream>;

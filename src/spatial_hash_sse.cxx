@@ -12,6 +12,7 @@
 #include <smmintrin.h>
 #endif
 
+#ifdef __SSE2__
 static inline __m128i quad_int_multiply(const __m128i &a, const __m128i &b) {
 #ifdef __SSE4_1__
     return _mm_mullo_epi32(a, b);
@@ -21,6 +22,7 @@ static inline __m128i quad_int_multiply(const __m128i &a, const __m128i &b) {
     return _mm_unpacklo_epi32(_mm_shuffle_epi32(tmp1, _MM_SHUFFLE (0,0,2,0)), _mm_shuffle_epi32(tmp2, _MM_SHUFFLE (0,0,2,0))); /* shuffle results to [63..0] and pack */
 #endif
 }
+#endif
 
 namespace desres { namespace msys {
 

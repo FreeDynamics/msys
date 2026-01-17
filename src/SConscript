@@ -168,7 +168,12 @@ fastjson/dtoa/fast-dtoa.cc
 
 libmsys_env = env.Clone()
 libmsys_env.Append(LIBS=['msys-core'])
-libmsys_env.AddLibrary('msys', lexobjs + lpobjs + sdfobjs + [inchi] + smiles_objs + dtoaobjs + jsobjs + zobjs + Split('''
+spatial_hash_obj = []
+if not env['PLATFORM'] == 'darwin':
+    spatial_hash_obj.append("spatial_hash_sse.cxx")
+else:
+    spatial_hash_obj.append("spatial_hash_float.cxx")
+libmsys_env.AddLibrary('msys', lexobjs + lpobjs + sdfobjs + [inchi] + smiles_objs + dtoaobjs + jsobjs + zobjs + spatial_hash_obj + Split('''
 
 smarts.cxx
 analyze/eigensystem.cxx
@@ -268,7 +273,6 @@ psf/export.cxx
 
 schema.cxx
 schema/schema.cxx
-spatial_hash.cxx
 spatial_hash_double.cxx
 
 annotated_system.cxx

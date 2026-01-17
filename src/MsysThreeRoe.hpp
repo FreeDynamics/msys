@@ -201,13 +201,13 @@ class ThreeRoe{
         const uint64_t* d64 = (const uint64_t *)data;
         uint64_t k0=d64[0], k1=d64[1], k2=d64[2], k3=d64[3];
 #else
-#error "Only x86 has been tested.  To compile for a different architecture, you'll have to tweak this #if and possibly write some endian-swapping and alignment-adjusting code in mixoneblock"
+// #error "Only x86 has been tested.  To compile for a different architecture, you'll have to tweak this #if and possibly write some endian-swapping and alignment-adjusting code in mixoneblock"
         // These *untested* lines *might* work on a machine with
         // permissive alignment requirements.  They are meant to
         // initialize k0 to k3 with the same numeric values as the
         // above code does on x86_64.
-        //const uint64_t* d64 = (const uint64_t *)data; // alignment???
-        //uint64_t k0=le64toh(d64[0]), k1=le64toh(d64[1]), k2=le64toh(d64[2]), k3=le64toh(d64[3]);
+        const uint64_t* d64 = (const uint64_t *)data; // alignment???
+        uint64_t k0=d64[0], k1=d64[1], k2=d64[2], k3=d64[3];
 #endif
         uint64_t k4=RotL_64(k3,R_64x4_2_0), k5=RotL_64(k2,R_64x4_1_0); 
         uint64_t k6=RotL_64(k1,R_64x4_2_1), k7=RotL_64(k0,R_64x4_1_1); 
