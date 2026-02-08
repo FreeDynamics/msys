@@ -10,3 +10,4 @@ tests/.mypy_cache/
 output/
 rattler-build-*.log
 upload_packages.sh
+.omc/
