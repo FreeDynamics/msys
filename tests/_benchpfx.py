@@ -8,9 +8,7 @@
 
 import sys, os
 
-TMPDIR = os.getenv("TMPDIR", "objs/Linux/x86_64")
-sys.path.insert(0, os.path.join(TMPDIR, "lib", "python"))
-import pfx
+import msys.pfx as pfx
 
 import numpy as NP
 import msys
@@ -26,7 +24,7 @@ def bench(path, fixbonds=False, glue=[], center=None, fit=None):
     dpos2 = dpos + [1, 2, 3]
     fpos2 = dpos2.astype("f")
     for pos in fpos, dpos:
-        print "%s data from %s" % ("single" if pos is fpos else "double", path)
+        print("%s data from %s" % ("single" if pos is fpos else "double", path))
         pos2 = fpos2 if pos is fpos else dpos2
         kls = pfx.Pfx
         t0 = time() * 1000
@@ -40,12 +38,12 @@ def bench(path, fixbonds=False, glue=[], center=None, fit=None):
         t2 = time() * 1000
         p.apply(pos, box)
         t3 = time() * 1000
-        print "%s\tconstruct %8.3fms center %8.3fms apply %8.3fms" % (
+        print("%s\tconstruct %8.3fms center %8.3fms apply %8.3fms" % (
             "single" if kls is pfx.Pfx else "double",
             t1 - t0,
             t2 - t1,
             t3 - t2,
-        )
+        ))
 
 
 bench("apoa1.dms", fixbonds=True, glue="backbone", center="protein")

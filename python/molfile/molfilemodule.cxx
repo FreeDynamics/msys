@@ -27,7 +27,7 @@ namespace {
 PyObject **desres::molfile::object_array(int size, PyObject **returned_result) {
     npy_intp dims=size;
     PyObject *result = PyArray_SimpleNew(1, &dims, NPY_OBJECT);
-    if (!result) return NULL;
+    if (!result) return nullptr;
     *returned_result = result;
     return reinterpret_cast<PyObject**>(PyArray_DATA(result));
 }

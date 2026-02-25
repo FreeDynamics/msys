@@ -111,7 +111,7 @@ namespace {
     template <findfunc f>
     Frame * wrap( const Reader& self, double time ) {
         Py_ssize_t index=(self.*f)(time);
-        if (index<0) return NULL;
+        if (index<0) return nullptr;
         return self.frame(index);
     }
 

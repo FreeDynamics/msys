@@ -1,11 +1,5 @@
-#!/usr/bin/env python2.7
-
 import sys
-
-sys.path.insert(0, "objs/CentOS6/x86_64/lib/python")
 import msys
-import vmd
-import molecule
 import atomsel
 from time import time
 
@@ -14,13 +8,13 @@ def compare_atomsel(coord_ent, sel, dump=False, perf=False):
     try:
         ent_gids = coord_ent.selectIds(sel)
     except RuntimeError:
-        print "MSYS failed to parse %s" % sel
+        print("MSYS failed to parse %s" % sel)
         return
     vmd_atomsel = atomsel.atomsel(sel)
     vmd_gids = vmd_atomsel.get("index")
 
     if not ent_gids == vmd_gids:
-        print "mismatch for [%s]: vmd %d msys %d" % (sel, len(vmd_gids), len(ent_gids))
+        print("mismatch for [%s]: vmd %d msys %d" % (sel, len(vmd_gids), len(ent_gids)))
         # print list(set(vmd_gids)-set(ent_gids))
         # print list(set(ent_gids)-set(vmd_gids))
         # print ent_gids
@@ -32,20 +26,20 @@ def compare_atomsel(coord_ent, sel, dump=False, perf=False):
         rc = False
     else:
         rc = True
-        print "match for [%s] (%d) " % (sel, len(vmd_gids))
+        print("match for [%s] (%d) " % (sel, len(vmd_gids)))
     if dump:
-        print "MSYS:"
-        print ent_gids
-        print "VMD:"
-        print vmd_gids
+        print("MSYS:")
+        print(ent_gids)
+        print("VMD:")
+        print(vmd_gids)
     if perf:
         t0 = time()
         coord_ent.selectIds(sel)
         t1 = time()
         atomsel.atomsel(sel)
         t2 = time()
-        print "MSYS: %s ms" % ((t1 - t0) * 1000)
-        print "VMD:  %s ms" % ((t2 - t1) * 1000)
+        print("MSYS: %s ms" % ((t1 - t0) * 1000))
+        print("VMD:  %s ms" % ((t2 - t1) * 1000))
     return rc
 
 
@@ -55,7 +49,6 @@ if len(sys.argv) < 2:
 else:
     path = sys.argv[1]
 
-coord_vmd = molecule.load(path.split(".")[-1], path)
 coord_ent = msys.Load(path)
 coord_ent.select("none")
 

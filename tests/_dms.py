@@ -13,7 +13,6 @@ dms-diff.
 '''
 
 import sys, os
-sys.path.insert(0,'objs/Linux/x86_64/lib/python')
 import msys
 
 DUMP='./dmsdump.py --without-provenance --without-forcefield --without-paraminfo'
@@ -24,7 +23,7 @@ import multiprocessing as MP
 def doit(path):
     base=os.path.basename(path)
     try:
-        print base
+        print(base)
         input=path+'-in'
         output=path+'-out'
         os.system('cp %s %s' % (path, input))
@@ -40,17 +39,17 @@ def doit(path):
 
         rc=os.system('%s %s.dump %s.dump' % (DIFF, input, output))
         return base, rc 
-    except RuntimeError, e:
+    except RuntimeError as e:
         return base, e
 
 if __name__=="__main__":
     p=MP.Pool(8)
     results = p.map(doit, sys.argv[1:])
-    failed = [r for r in results if r[1] is not 0]
-    print "---------------------------------------------------------------"
-    print "%d/%d files passed." % (len(results)-len(failed), len(results))
+    failed = [r for r in results if r[1] != 0]
+    print("---------------------------------------------------------------")
+    print("%d/%d files passed." % (len(results)-len(failed), len(results)))
     if failed:
         for path, rc in failed:
-            print "%s: %s" % (path, rc)
+            print("%s: %s" % (path, rc))
         exit(1)
 

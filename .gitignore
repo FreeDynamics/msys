@@ -11,3 +11,10 @@ output/
 rattler-build-*.log
 upload_packages.sh
 .omc/
+# pixi environments
+.pixi/*
+pixi.lock
+pixi.toml
+!.pixi/config.toml
+
+debug/

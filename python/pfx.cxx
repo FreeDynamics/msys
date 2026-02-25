@@ -105,7 +105,7 @@ static PyObject* py_apply(PyObject* pySelf, PyObject* args, PyObject* kwds) {
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!O|O", kwlist,
                 &PyArray_Type, &posobj, &boxobj, &velobj))
-        return NULL;
+        return nullptr;
 
     /* box is either None or a 3x3 NumPy array, parsed as double */
     if (boxobj != Py_None) {
@@ -113,7 +113,7 @@ static PyObject* py_apply(PyObject* pySelf, PyObject* args, PyObject* kwds) {
                 boxobj,
                 PyArray_DescrFromType(NPY_DOUBLE), 
                 2, 2, NPY_INOUT_ARRAY | NPY_FORCECAST, NULL);
-        if (!boxarr) return NULL;
+        if (!boxarr) return nullptr;
         if (PyArray_DIM(boxarr,0)!=3 ||
             PyArray_DIM(boxarr,1)!=3) {
             PyErr_Format(PyExc_ValueError, "box must be 3x3, got %ldx%ld",
@@ -127,7 +127,7 @@ static PyObject* py_apply(PyObject* pySelf, PyObject* args, PyObject* kwds) {
     posarr = PyArray_FromAny(posobj, NULL, 2, 2, NPY_INOUT_ARRAY, NULL);
     if (!posarr) {
         Py_XDECREF(boxarr);
-        return NULL;
+        return nullptr;
     }
     if (PyArray_DIM(posarr,0)!=pfx->size() ||
         PyArray_DIM(posarr,1)!=3) {
@@ -198,14 +198,14 @@ static PyObject* py_glue(PyObject *self, PyObject *args, PyObject *kwds) {
     static char *kwlist[] = {(char *)"atoms", 0};
     
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &atomobj))
-        return NULL;
+        return nullptr;
     if (!(atomarr = PyArray_FromAny(
                     atomobj,
                     PyArray_DescrFromType(NPY_UINT32),
                     1,1,
                     NPY_C_CONTIGUOUS | NPY_ALIGNED,
                     NULL)))
-        return NULL;
+        return nullptr;
 
     int n = (int)PyArray_DIM(atomarr, 0);
     pfx->glue(n, (unsigned *)PyArray_DATA(atomarr));
@@ -234,7 +234,7 @@ static PyObject* py_align(PyObject *self, PyObject *args, PyObject *kwds) {
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|OO", kwlist,
                 &atomobj, &coordobj, &wobj))
-        return NULL;
+        return nullptr;
 
     if (!(atomarr = PyArray_FromAny(
                     atomobj,
@@ -242,7 +242,7 @@ static PyObject* py_align(PyObject *self, PyObject *args, PyObject *kwds) {
                     1,1,
                     NPY_C_CONTIGUOUS | NPY_ALIGNED,
                     NULL)))
-        return NULL;
+        return nullptr;
 
     if(coordobj!=Py_None) {
         if (!(coordarr = PyArray_FromAny(
@@ -252,7 +252,7 @@ static PyObject* py_align(PyObject *self, PyObject *args, PyObject *kwds) {
                         NPY_C_CONTIGUOUS | NPY_ALIGNED,
                         NULL))) {
             Py_DECREF(atomarr);
-            return NULL;
+            return nullptr;
         }
 
         if (PyArray_DIM(coordarr,0)!=PyArray_DIM(atomarr,0) ||
@@ -260,7 +260,7 @@ static PyObject* py_align(PyObject *self, PyObject *args, PyObject *kwds) {
             Py_DECREF(atomarr);
             Py_DECREF(coordarr);
             PyErr_Format(PyExc_ValueError, "coords must be len(atoms) x 3");
-            return NULL;
+            return nullptr;
         }
         coords = (const double*)PyArray_DATA(coordarr);
     }
@@ -274,13 +274,13 @@ static PyObject* py_align(PyObject *self, PyObject *args, PyObject *kwds) {
                         NULL))) {
             Py_DECREF(atomarr);
             Py_XDECREF(coordarr);
-            return NULL;
+            return nullptr;
         }
         if (PyArray_DIM(warr,0)!=PyArray_DIM(atomarr,0)) {
             Py_DECREF(atomarr);
             Py_XDECREF(coordarr);
             PyErr_Format(PyExc_ValueError, "weights must be len(atoms)");
-            return NULL;
+            return nullptr;
         }
         weights = (const double *)PyArray_DATA(warr);
     }
@@ -308,21 +308,21 @@ static PyObject* py_rmsd(PyObject *self, PyObject *args, PyObject *kwds) {
     static char *kwlist[] = {(char *)"pos", 0};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &posobj))
-        return NULL;
+        return nullptr;
 
     if (!(posarr = PyArray_FromAny(
                    posobj, NULL,
                    2,2,
                    NPY_C_CONTIGUOUS | NPY_ALIGNED | NPY_FORCECAST,
                    NULL))) {
-        return NULL;
+        return nullptr;
     }
 
     if (PyArray_DIM(posarr,0)!=pfx->size() ||
         PyArray_DIM(posarr,1)!=3) {
         PyErr_Format(PyExc_ValueError, "pos must be len(atoms) x 3");
         Py_DECREF(posarr);
-        return NULL;
+        return nullptr;
     }
     double rmsd=-1;
     switch (PyArray_TYPE(posarr)) {
@@ -335,7 +335,7 @@ static PyObject* py_rmsd(PyObject *self, PyObject *args, PyObject *kwds) {
         default:
             PyErr_Format(PyExc_ValueError, "pos must be float or double");
             Py_DECREF(posarr);
-            return NULL;
+            return nullptr;
     }
     Py_DECREF(posarr);
     return PyFloat_FromDouble(rmsd);
@@ -388,7 +388,7 @@ static PyObject* extract_3x3(PyObject* Aobj) {
                  2,2,
                  NPY_C_CONTIGUOUS | NPY_ALIGNED | NPY_FORCECAST,
                  NULL))) {
-        return NULL;
+        return nullptr;
     }
     if (PyArray_DIM(Aarr,0)!=3 ||
         PyArray_DIM(Aarr,1)!=3) {
@@ -396,7 +396,7 @@ static PyObject* extract_3x3(PyObject* Aobj) {
                 PyArray_DIM(Aarr,0),
                 PyArray_DIM(Aarr,1));
         Py_DECREF(Aarr);
-        return NULL;
+        return nullptr;
     }
     return Aarr;
 }

@@ -2,9 +2,6 @@
 
 import sys
 import os
-
-TMPDIR = os.getenv("TMPDIR", "objs/Linux/x86_64")
-sys.path.insert(0, os.path.join(TMPDIR, "lib", "python"))
 import msys
 import json
 
@@ -14,7 +11,7 @@ def selections():
         line = line.strip()
         if not line or line.startswith("#"):
             continue
-        print line
+        print (line)
         yield line
 
 

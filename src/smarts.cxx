@@ -4,7 +4,6 @@
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/tuple/tuple.hpp>
-#include <boost/foreach.hpp>
 #include <stack>
 
 namespace qi = boost::spirit::qi;
@@ -829,7 +828,7 @@ MultiIdList SmartsPattern::findMatches(AnnotatedSystem const& sys,
         IdList const& atoms) const {
 
     MultiIdList matches;
-    BOOST_FOREACH(Id id, atoms) {
+    for(Id id : atoms) {
         if (sys.atomFAST(id).atomic_number < 1)
             continue;
         _impl->matchSmartsPattern(sys, id, matches);

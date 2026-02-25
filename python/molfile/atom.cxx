@@ -149,18 +149,18 @@ namespace {
         float order = 1;
         if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!|f", kwlist,
                     &AtomType, &pyAtom, &order))
-            return NULL;
+            return nullptr;
         Atom_t *self = reinterpret_cast<Atom_t*>(pySelf);
         Atom_t *atom = reinterpret_cast<Atom_t*>(pyAtom);
         if (atom == self) {
             PyErr_SetString(PyExc_ValueError, "Cannot add bond to self");
-            return NULL;
+            return nullptr;
         }
         PyObject * orderobj = PyFloat_FromDouble(order);
         if (PyDict_SetItem(self->bonds, pyAtom, orderobj) ||
                 PyDict_SetItem(atom->bonds, pySelf, orderobj)) {
             Py_DECREF(orderobj);
-            return NULL;
+            return nullptr;
         }
         Py_DECREF(orderobj);
         Py_INCREF(Py_None);
@@ -174,15 +174,15 @@ namespace {
         PyObject *pyAtom=NULL;
         if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist,
                     &AtomType, &pyAtom))
-            return NULL;
+            return nullptr;
         Atom_t *self = reinterpret_cast<Atom_t*>(pySelf);
         Atom_t *atom = reinterpret_cast<Atom_t*>(pyAtom);
-        if (PyDict_DelItem(self->bonds, pyAtom)<0 && 
-                !PyErr_ExceptionMatches(PyExc_KeyError)) 
-            return NULL;
-        if (PyDict_DelItem(atom->bonds, pySelf)<0 && 
+        if (PyDict_DelItem(self->bonds, pyAtom)<0 &&
                 !PyErr_ExceptionMatches(PyExc_KeyError))
-            return NULL;
+            return nullptr;
+        if (PyDict_DelItem(atom->bonds, pySelf)<0 &&
+                !PyErr_ExceptionMatches(PyExc_KeyError))
+            return nullptr;
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -192,12 +192,12 @@ namespace {
     PyObject * getbondorder(PyObject * pySelf, PyObject * args) {
         PyObject * pyAtom=NULL;
         if (!PyArg_ParseTuple(args, "O!", &AtomType, &pyAtom))
-            return NULL;
+            return nullptr;
         Atom_t *self = reinterpret_cast<Atom_t*>(pySelf);
         PyObject * val = PyDict_GetItem(self->bonds, pyAtom);
         if (!val) {
             PyErr_Format(PyExc_ValueError, "no bond to atom");
-            return NULL;
+            return nullptr;
         }
         Py_INCREF(val);
         return val;
@@ -209,19 +209,19 @@ namespace {
         PyObject * pyAtom=NULL;
         float value=1;
         if (!PyArg_ParseTuple(args, "O!f", &AtomType, &pyAtom, &value))
-            return NULL;
+            return nullptr;
         Atom_t *self = reinterpret_cast<Atom_t*>(pySelf);
         Atom_t *atom = reinterpret_cast<Atom_t*>(pyAtom);
         PyObject * val = PyDict_GetItem(self->bonds, pyAtom);
         if (!val) {
             PyErr_Format(PyExc_ValueError, "no bond to atom");
-            return NULL;
+            return nullptr;
         }
         if (PyDict_SetItem(self->bonds, pyAtom, PyFloat_FromDouble(value))) {
-            return NULL;
+            return nullptr;
         }
         if (PyDict_SetItem(atom->bonds, pySelf, PyFloat_FromDouble(value))) {
-            return NULL;
+            return nullptr;
         }
         Py_INCREF(Py_None);
         return Py_None;
