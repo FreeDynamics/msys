@@ -5,6 +5,8 @@ export DESRES_MODULE_CXXFLAGS=$CXXFLAGS
 export DESRES_MODULE_CFLAGS=$CFLAGS
 export DESRES_MODULE_LDFLAGS=$LDFLAGS
 
+ln -s $PREFIX/include/lpsolve $PREFIX/include/lp_solve
+
 nprocs=`getconf _NPROCESSORS_ONLN`
 python_version=$(python -c 'import sys; print("".join(map(str, sys.version_info[:2])))')
 $BUILD_PREFIX/bin/scons install -j $nprocs \

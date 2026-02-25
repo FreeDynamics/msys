@@ -19,6 +19,7 @@ requirements:
     - python
     - libboost
     - libboost-devel
+    - lpsolve55
     - rdkit
 
   host:
@@ -27,6 +28,7 @@ requirements:
     - pybind11
     - libboost
     - libboost-devel
+    - lpsolve55
     - rapidjson
     - zlib
     - rdkit
@@ -35,6 +37,7 @@ requirements:
     - python
     - libboost
     - libboost-devel
+    - lpsolve55
     - rdkit
     - ${{ pin_compatible('numpy') }}
     - ${{ pin_compatible('libboost') }}
