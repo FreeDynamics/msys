@@ -7,7 +7,7 @@ source:
   use_gitignore: true # note: defaults to true
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
