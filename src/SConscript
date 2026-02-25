@@ -168,6 +168,9 @@ fastjson/dtoa/fast-dtoa.cc
 
 libmsys_env = env.Clone()
 libmsys_env.Append(LIBS=['msys-core'])
+if env.get('MSYS_WITH_LPSOLVE'):
+    libmsys_env.Append(RPATH=['$ORIGIN/lp_solve'])
+
 spatial_hash_obj = []
 if not env['PLATFORM'] == 'darwin':
     spatial_hash_obj.append("spatial_hash_sse.cxx")
