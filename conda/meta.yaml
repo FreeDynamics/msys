@@ -15,6 +15,7 @@ requirements:
     - ${{ compiler('cxx') }}
     - scons
     - numpy >=1.24,<2
+    - libgomp
     - pybind11
     - python
     - libboost
@@ -25,6 +26,7 @@ requirements:
   host:
     - python
     - numpy >=1.24,<2
+    - libgomp
     - pybind11
     - libboost
     - libboost-devel
@@ -35,6 +37,7 @@ requirements:
 
   run:
     - python
+    - libgomp
     - libboost
     - libboost-devel
     - lpsolve55
@@ -69,6 +72,7 @@ tests:
       - dms2mae -h
       # Ensure that lpsolve is linked properly
       - python -c 'import msys; s = msys.FromSmilesString("CC"); msys.AssignBondOrderAndFormalCharge(s)'
+      - python tests/test_assign_bo/test_assign_bo.py
 
 about:
   homepage: https://github.com/DEShawResearch/msys
